@@ -1,8 +1,20 @@
 # type: ignore
-import sfdf
+from sfdf import *
 from datetime import datetime
 
+def select_should_fail(k: DfSymbolicInternal, p: DfSymbolicInternal) -> bool:
+    """
+    pre: valid_dataframe(k)
+    pre: "a" in k and "b" in k
+    pre: valid_dataframe(p)
+    pre: "a" in p
+    post: __return__ == True
+    """
 
-def test_drop_duplicates():
-    sfdf.drop_duplicates({'': [datetime(1, 1, 1, 0, 0)]})
+    k = select(k, {"a", "b"})
+    k = join(k, p, on={"a"})
+    k = select(k, {"k"})
+    print(k)
+
+    return True
 

@@ -1,12 +1,7 @@
-from typing import Dict, List, Union, Tuple, Set, Callable, Any
-from datetime import datetime
+from typing import Dict, List, Union, Tuple, Set, Callable
 
 AlowedColumns = Union[List[float], List[int], List[str]]
 DfSimbolicInternal = Dict[str, AlowedColumns]
-
-
-def hash_element(e: Any) -> int:
-    return hash(e) if type(e) != datetime else hash(str(e))
 
 
 def shape(df: DfSimbolicInternal) -> Tuple[int, int]:
@@ -23,12 +18,11 @@ def valid_dataframe(df: DfSimbolicInternal) -> bool:
 
 def select(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
     """
-    pre: len(df) != 0
-    pre: len(cols) > 0
-    pre: all(len(v) == shape(df)[1] for v in df.values())
+    pre: valid_dataframe(df)
     pre: all(c in df for c in cols)
+    pre: len(cols) > 0
     post: all(c in __return__ for c in cols)
-    post: __return__ != None
+    post: valid_dataframe(__return__)
     post: shape(__return__) == (len(cols), shape(df)[1])
     """
     return {c: df[c] for c in cols}
@@ -36,9 +30,9 @@ def select(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
 
 def drop(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
     """
-    pre: len(df) > len(cols)
+    pre: valid_dataframe(df)
     pre: len(cols) > 0
-    pre: all(len(v) == shape(df)[1] for v in df.values())
+    pre: len(df) > len(cols)
     pre: all(c in df for c in cols)
     post: all(c not in __return__ for c in cols)
     post: all(c in __return__ for c in df if c not in cols)
@@ -50,9 +44,12 @@ def drop(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
 
 def union(df_1: DfSimbolicInternal, df_2: DfSimbolicInternal) -> DfSimbolicInternal:
     """
-    pre: len(df_1) != 0
+    pre: valid_dataframe(df_1)
+    pre: valid_dataframe(df_2)
     pre: all(c in df_1 for c in df_2)
     pre: all(c in df_2 for c in df_1)
+    pre: valid_dataframe(df_1)
+    pre: valid_dataframe(df_2)
     post: __return__ != None
     post: shape(__return__) == (shape(df_1)[0], shape(df_1)[1] + shape(df_2)[1])
     """
@@ -63,8 +60,8 @@ def join(df_1: DfSimbolicInternal, df_2: DfSimbolicInternal, on: Set[str]) -> Df
     """
     left inner join
 
-    pre: len(df_1) != 0
-    pre: len(df_2) != 0
+    pre: valid_dataframe(df_1)
+    pre: valid_dataframe(df_2)
     pre: all(c in df_1 for c in on)
     pre: all(c in df_2 for c in on)
     post: all(c in __return__ for c in [*df_1, *df_2])
@@ -99,7 +96,7 @@ def drop_duplicates(df: DfSimbolicInternal) -> DfSimbolicInternal:
         row = 0
         for c in df:
             e = df[c][i]
-            my_hash = hash_element(e)
+            my_hash = hash(e)
             row += my_hash
         if row not in row_set:
             row_set.add(row)
@@ -123,7 +120,7 @@ def group_by(
 
     """
     hash_col = [
-        sum(hash_element(df[c][i]) for c in df)
+        sum(hash(df[c][i]) for c in df)
         for i in range(shape(df)[1])
     ]
 
@@ -162,8 +159,6 @@ def assign(
         df[k] = fn(df)
 
     return df
-
-
 
 
 
