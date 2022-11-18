@@ -1,22 +1,22 @@
 from typing import Dict, List, Union, Tuple, Set, Callable
 
 AlowedColumns = Union[List[float], List[int], List[str]]
-DfSimbolicInternal = Dict[str, AlowedColumns]
+DfSymbolicInternal = Dict[str, AlowedColumns]
 
 
-def shape(df: DfSimbolicInternal) -> Tuple[int, int]:
+def shape(df: DfSymbolicInternal) -> Tuple[int, int]:
     """
     pre: len(df) != 0
     """
     return (len(df), len(next(iter(df.values()))))
 
 
-def valid_dataframe(df: DfSimbolicInternal) -> bool:
+def valid_dataframe(df: DfSymbolicInternal) -> bool:
     n_cols, n_rows = shape(df)
     return n_cols > 0 and n_rows > 0 and all(len(df[c]) == n_rows for c in df)
 
 
-def select(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
+def select(df: DfSymbolicInternal, cols: Set[str]) -> DfSymbolicInternal:
     """
     pre: valid_dataframe(df)
     pre: all(c in df for c in cols)
@@ -28,7 +28,7 @@ def select(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
     return {c: df[c] for c in cols}
 
 
-def drop(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
+def drop(df: DfSymbolicInternal, cols: Set[str]) -> DfSymbolicInternal:
     """
     pre: valid_dataframe(df)
     pre: len(cols) > 0
@@ -42,7 +42,7 @@ def drop(df: DfSimbolicInternal, cols: Set[str]) -> DfSimbolicInternal:
     return {c: df[c] for c in df if c not in cols}
 
 
-def union(df_1: DfSimbolicInternal, df_2: DfSimbolicInternal) -> DfSimbolicInternal:
+def union(df_1: DfSymbolicInternal, df_2: DfSymbolicInternal) -> DfSymbolicInternal:
     """
     pre: valid_dataframe(df_1)
     pre: valid_dataframe(df_2)
@@ -56,7 +56,7 @@ def union(df_1: DfSimbolicInternal, df_2: DfSimbolicInternal) -> DfSimbolicInter
     return {k: [*df_1[k], *df_2[k]] for k in df_1}
 
 
-def join(df_1: DfSimbolicInternal, df_2: DfSimbolicInternal, on: Set[str]) -> DfSimbolicInternal:
+def join(df_1: DfSymbolicInternal, df_2: DfSymbolicInternal, on: Set[str]) -> DfSymbolicInternal:
     """
     left inner join
 
@@ -83,14 +83,14 @@ def join(df_1: DfSimbolicInternal, df_2: DfSimbolicInternal, on: Set[str]) -> Df
     }
 
 
-def drop_duplicates(df: DfSimbolicInternal) -> DfSimbolicInternal:
+def drop_duplicates(df: DfSymbolicInternal) -> DfSymbolicInternal:
     """
     pre: valid_dataframe(df)
     pre: shape(df)[1] > 0
     post: shape(df)[1] >= shape(__return__)[1]
     post: shape(df)[1] > 0
     """
-    new_df: DfSimbolicInternal = {c: [] for c in df}  # type: ignore
+    new_df: DfSymbolicInternal = {c: [] for c in df}  # type: ignore
     row_set = set()
     for i in range(shape(df)[1]):
         row = 0
@@ -108,10 +108,10 @@ def drop_duplicates(df: DfSimbolicInternal) -> DfSimbolicInternal:
 
 
 def group_by(
-    df: DfSimbolicInternal,
+    df: DfSymbolicInternal,
     key: List[str],
-    fn: Callable[[DfSimbolicInternal], DfSimbolicInternal]
-) -> DfSimbolicInternal:
+    fn: Callable[[DfSymbolicInternal], DfSymbolicInternal]
+) -> DfSymbolicInternal:
     """
     pre: valid_dataframe(df)
     pre: all(k in df for k in key)
@@ -124,7 +124,7 @@ def group_by(
         for i in range(shape(df)[1])
     ]
 
-    groups: Dict[int, DfSimbolicInternal] = {}
+    groups: Dict[int, DfSymbolicInternal] = {}
     for idx, hash_val in enumerate(hash_col):
         if idx not in groups:
             groups[hash_val] = {c: [] for c in df}  # type: ignore
@@ -145,9 +145,9 @@ def group_by(
 
 
 def assign(
-    df: DfSimbolicInternal,
-    **kwargs: Callable[[DfSimbolicInternal], Union[AlowedColumns]]
-) -> DfSimbolicInternal:
+    df: DfSymbolicInternal,
+    **kwargs: Callable[[DfSymbolicInternal], Union[AlowedColumns]]
+) -> DfSymbolicInternal:
     """
     pre: valid_dataframe(df)
     pre: all(len(fn(df)) == shape(df)[1] for fn in kwargs.values())
