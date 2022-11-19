@@ -1,6 +1,5 @@
 # type: ignore
 from sfdf import *
-from datetime import datetime
 
 def select_should_fail(k: DfSymbolicInternal, p: DfSymbolicInternal) -> bool:
     """
@@ -14,7 +13,5 @@ def select_should_fail(k: DfSymbolicInternal, p: DfSymbolicInternal) -> bool:
     k = select(k, {"a", "b"})
     k = join(k, p, on={"a"})
     k = select(k, {"k"})
-    print(k)
 
     return True
-

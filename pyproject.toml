@@ -7,16 +7,16 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-python-lsp-server = {extras = ["all"], version = "^1.6.0"}
-pylsp-mypy = "^0.6.3"
-pylsp-rope = "^0.1.10"
-pipe = "^2.0"
-pypework = "^0.8"
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
 ipython = "*"
 crosshair-tool = "*"
+python-lsp-server = {extras = ["all"], version = "^1.6.0"}
+pylsp-mypy = "^0.6.3"
+pylsp-rope = "^0.1.10"
+pipe = "^2.0"
+pypework = "^0.8"
 
 [build-system]
 requires = ["poetry-core"]

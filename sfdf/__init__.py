@@ -64,6 +64,7 @@ def join(df_1: DfSymbolicInternal, df_2: DfSymbolicInternal, on: Set[str]) -> Df
     pre: valid_dataframe(df_2)
     pre: all(c in df_1 for c in on)
     pre: all(c in df_2 for c in on)
+    pre: not any(c in df_2 for c in df_1 if c not in on)
     post: all(c in __return__ for c in [*df_1, *df_2])
     """
     join_indexes = [
@@ -109,7 +110,7 @@ def drop_duplicates(df: DfSymbolicInternal) -> DfSymbolicInternal:
 
 def group_by(
     df: DfSymbolicInternal,
-    key: List[str],
+    key: Set[str],
     fn: Callable[[DfSymbolicInternal], DfSymbolicInternal]
 ) -> DfSymbolicInternal:
     """
@@ -120,7 +121,7 @@ def group_by(
 
     """
     hash_col = [
-        sum(hash(df[c][i]) for c in df)
+        sum(hash(df[c][i]) for c in key)
         for i in range(shape(df)[1])
     ]
 
