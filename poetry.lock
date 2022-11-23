@@ -10,7 +10,7 @@ python-versions = "*"
 name = "astroid"
 version = "2.12.12"
 description = "An abstract syntax tree for Python with inference support."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 
@@ -53,7 +53,7 @@ tests-no-zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy 
 name = "autopep8"
 version = "1.6.0"
 description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -73,7 +73,7 @@ python-versions = "*"
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
 
@@ -108,7 +108,7 @@ python-versions = ">=3.5"
 name = "dill"
 version = "0.3.6"
 description = "serialize all of python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -119,7 +119,7 @@ graph = ["objgraph (>=1.7.2)"]
 name = "docstring-to-markdown"
 version = "0.10"
 description = "On the fly conversion of Python docstrings to markdown"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -149,7 +149,7 @@ tests = ["asttokens", "littleutils", "pytest", "rich"]
 name = "flake8"
 version = "5.0.4"
 description = "the modular source code checker: pep8 pyflakes and co"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.1"
 
@@ -233,7 +233,7 @@ test-extra = ["curio", "matplotlib (!=3.2.0)", "nbformat", "numpy (>=1.20)", "pa
 name = "isort"
 version = "5.10.1"
 description = "A Python utility / library to sort Python imports."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.1,<4.0"
 
@@ -247,7 +247,7 @@ requirements-deprecated-finder = ["pip-api", "pipreqs"]
 name = "jedi"
 version = "0.18.1"
 description = "An autocompletion tool for Python that can be used for text editors."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -262,7 +262,7 @@ testing = ["Django (<3.1)", "colorama", "docopt", "pytest (<7.0.0)"]
 name = "lazy-object-proxy"
 version = "1.8.0"
 description = "A fast and thorough lazy object proxy."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -281,7 +281,7 @@ traitlets = "*"
 name = "mccabe"
 version = "0.7.0"
 description = "McCabe checker, plugin for flake8"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -289,7 +289,7 @@ python-versions = ">=3.6"
 name = "mypy"
 version = "0.991"
 description = "Optional static typing for Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -308,7 +308,7 @@ reports = ["lxml"]
 name = "mypy-extensions"
 version = "0.4.3"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -316,7 +316,7 @@ python-versions = "*"
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -327,7 +327,7 @@ pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 name = "parso"
 version = "0.8.3"
 description = "A Python Parser"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -358,7 +358,7 @@ python-versions = "*"
 name = "pipe"
 version = "2.0"
 description = "Module enablig a sh like infix syntax (using pipes)"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -366,7 +366,7 @@ python-versions = ">=3.7"
 name = "platformdirs"
 version = "2.5.4"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -378,7 +378,7 @@ test = ["appdirs (==1.4.4)", "pytest (>=7.2)", "pytest-cov (>=4)", "pytest-mock 
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -420,7 +420,7 @@ tests = ["pytest"]
 name = "pycodestyle"
 version = "2.9.1"
 description = "Python style guide checker"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -428,7 +428,7 @@ python-versions = ">=3.6"
 name = "pydocstyle"
 version = "6.1.1"
 description = "Python docstring style checker"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -442,7 +442,7 @@ toml = ["toml"]
 name = "pyflakes"
 version = "2.5.0"
 description = "passive checker of Python programs"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -461,7 +461,7 @@ plugins = ["importlib-metadata"]
 name = "pylint"
 version = "2.15.5"
 description = "python code static checker"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7.2"
 
@@ -483,7 +483,7 @@ testutils = ["gitpython (>3)"]
 name = "pylsp-mypy"
 version = "0.6.3"
 description = "Mypy linter for the Python LSP Server"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -499,7 +499,7 @@ test = ["coverage", "pytest", "pytest-cov", "tox"]
 name = "pylsp-rope"
 version = "0.1.10"
 description = "Extended refactoring capabilities for Python LSP Server using Rope."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -515,7 +515,7 @@ test = ["pytest"]
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.8"
 
@@ -526,7 +526,7 @@ diagrams = ["jinja2", "railroad-diagrams"]
 name = "pypework"
 version = "0.8"
 description = "Functional pipeline library for Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -554,7 +554,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.
 name = "python-lsp-jsonrpc"
 version = "1.0.0"
 description = "JSON RPC 2.0 server library"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -568,7 +568,7 @@ test = ["coverage", "pycodestyle", "pyflakes", "pylint", "pytest", "pytest-cov"]
 name = "python-lsp-server"
 version = "1.6.0"
 description = "Python Language Server for the Language Server Protocol"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -608,7 +608,7 @@ yapf = ["whatthepatch (>=1.0.2,<2.0.0)", "yapf"]
 name = "pytoolconfig"
 version = "1.2.2"
 description = "Python tool configuration"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -626,7 +626,7 @@ validation = ["pydantic (>=1.7.4)"]
 name = "rope"
 version = "1.4.0"
 description = "a python refactoring library..."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -641,7 +641,7 @@ doc = ["pytoolconfig[doc]", "sphinx (>=4.5.0)", "sphinx-autodoc-typehints (>=1.1
 name = "setuptools"
 version = "65.5.1"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -662,7 +662,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "snowballstemmer"
 version = "2.2.0"
 description = "This package provides 29 stemmers for 28 languages generated from Snowball algorithms."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -686,7 +686,7 @@ tests = ["cython", "littleutils", "pygments", "pytest", "typeguard"]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -694,7 +694,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -702,7 +702,7 @@ python-versions = ">=3.7"
 name = "tomlkit"
 version = "0.11.6"
 description = "Style preserving TOML library"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -733,7 +733,7 @@ importlib-resources = ">=1.4.0"
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -753,7 +753,7 @@ typing-extensions = ">=3.7.4"
 name = "ujson"
 version = "5.5.0"
 description = "Ultra fast JSON encoder and decoder for Python"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -769,7 +769,7 @@ python-versions = "*"
 name = "whatthepatch"
 version = "1.0.3"
 description = "A patch parsing and application library."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.7"
 
@@ -777,7 +777,7 @@ python-versions = ">=3.7"
 name = "wrapt"
 version = "1.14.1"
 description = "Module for decorators, wrappers and monkey patching."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 
@@ -785,7 +785,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 name = "yapf"
 version = "0.32.0"
 description = "A formatter for Python code."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -812,7 +812,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "ce4e2c1de23ef13f65c5733cb1568fea17b2857723f6ff5323b05596f168d793"
+content-hash = "6bf65902f97f3fb3efd8179f10d30b96a544eb91776b74eeeffa597da6cf49c2"
 
 [metadata.files]
 appnope = [
