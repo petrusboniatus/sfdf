@@ -88,7 +88,7 @@ def get_element(df: Sfdf, col: ColunmReference, row: ColunmReference) -> Union[i
 
 
 def select(df: Sfdf, cols: Set[ColunmReference]) -> Sfdf:
-    pre = """
+    """
     pre: valid_df(df)
     pre: all(c in df.col_hashes for c in cols)
     pre: len(cols) > 1
@@ -131,7 +131,7 @@ def assing(df: Sfdf, maps: Dict[ColunmReference, MappingFunction]) -> Sfdf:
                 raise TypeError(f"invalid col type {typ}")
 
             for i, r in enumerate(result_data):
-                if r in lookup_table:
+                if r in lookup_table:  # This can get out of hand very fast
                     data.append(lookup_table.index(r))
                 else:
                     data.append(len(lookup_table))
@@ -151,8 +151,8 @@ def assing(df: Sfdf, maps: Dict[ColunmReference, MappingFunction]) -> Sfdf:
 
     return replace(
         df,
-        col_hashes=new_cols_hashes,
-        col_spces=new_cols_specs,
+        col_hashes=df.col_hashes + new_cols_hashes,
+        col_spces=df.col_spces + new_cols_specs,
         possible_string_values=new_possible_strings,
         possible_float_values=new_possible_floats
     )
