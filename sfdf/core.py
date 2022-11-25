@@ -1,33 +1,43 @@
 from dataclasses import dataclass, replace
-from typing import List, Union, Tuple, Set, Callable, Dict, Type, Any
+from typing import List, Union, Tuple, Set, Callable, Dict, Type, Any, TypeVar, Generic
+import collections
 import crosshair
+import pandas as pd
+from expr import LazyExpr
 
 
-INTEGER_COL_TYPE_ID = 1
-STRING_COL_TYPE_ID = 2
-FLOAT_COL_TYPE_ID = 3
-N_COL_TYPES = 3
+INTEGER_COL_TYPE_ID = 0
+STRING_COL_TYPE_ID = 1
+FLOAT_COL_TYPE_ID = 2
+BOOL_COL_TYPE_ID = 3
+N_COL_TYPES = 4
 
 
-def _type_to_id(k: Type[Union[int, str, float]]) -> int:
+ColunmReference = int
+ValidColType = Union[int, str, float, bool]
+ColValueAccessor = Callable[[ColunmReference], ValidColType]
+MappingFunction = Union[
+    Callable[[ColValueAccessor], int],
+    Callable[[ColValueAccessor], float],
+    Callable[[ColValueAccessor], str],
+    Callable[[ColValueAccessor], bool]
+]
+
+@dataclass
+class Expr:
+    fn: MappingFunction
+
+def _type_to_id(k: Type[ValidColType]) -> int:
     if k == int:
         return INTEGER_COL_TYPE_ID
     elif k == str:
         return STRING_COL_TYPE_ID
     elif k == float:
         return FLOAT_COL_TYPE_ID
+    elif k == bool:
+        return BOOL_COL_TYPE_ID
     else:
         raise TypeError("Type not supported")
-
-
-ColunmReference = int
-ValidColType = Union[int, str, float]
-ColValueAccessor = Callable[[ColunmReference], ValidColType]
-MappingFunction = Union[
-    Callable[[ColValueAccessor], int],
-    Callable[[ColValueAccessor], float],
-    Callable[[ColValueAccessor], str]
-]
 
 @dataclass
 class ColSpec:
@@ -71,18 +81,23 @@ def shape(df: Sfdf) -> Tuple[int, int]:
     return len(df.col_hashes), df.size
 
 
-def get_element(df: Sfdf, col: ColunmReference, row: ColunmReference) -> Union[int, str, float]:
+def get_element(df: Sfdf, col: int, row: int) -> Union[ValidColType]:
     spec = df.col_spces[col]
     if row >= df.size:
         raise IndexError(f"row index of {row} does not exists on dataframe of shape {shape(df)}")
     spec_list = [spec.l_0, spec.l_1, spec.l_2, spec.l_3] + spec.l_rest
-    col_type = spec.typ % N_COL_TYPES
+    col_type = spec.ctyp % N_COL_TYPES
     if col_type == INTEGER_COL_TYPE_ID:
         return spec_list[row % len(spec_list)]
     elif col_type == STRING_COL_TYPE_ID:
-        return df.possible_string_values[spec_list[row % len(spec_list)]]
+        return df.possible_string_values[spec_list[row % len(spec_list)]
+                                         % len(df.possible_string_values)]
     elif col_type == FLOAT_COL_TYPE_ID:
-        return df.possible_float_values[spec_list[row % len(spec_list)]]
+        return df.possible_float_values[spec_list[row % len(spec_list)]
+                                        % len(df.possible_float_values)]
+    else:
+        col_type == BOOL_COL_TYPE_ID
+        return spec_list[row % len(spec_list)] > 0
 
     raise IndexError("col type out of index, this should not happend")
 
@@ -103,7 +118,8 @@ def select(df: Sfdf, cols: Set[ColunmReference]) -> Sfdf:
         col_spces=[df.col_spces[df.col_hashes.index(c)] for c in col_list]
     )
 
-def assing(df: Sfdf, maps: Dict[ColunmReference, MappingFunction]) -> Sfdf:
+
+def assing(df: Sfdf, maps: Dict[ColunmReference, Expr]) -> Sfdf:
     """
     pre: valid_df(df)
     pre: len(maps) > 0
@@ -114,12 +130,12 @@ def assing(df: Sfdf, maps: Dict[ColunmReference, MappingFunction]) -> Sfdf:
     new_cols_specs = []
     new_possible_floats = list(df.possible_float_values)
     new_possible_strings = list(df.possible_string_values)
-    for k, fn in maps.items():
+    for k, expr in maps.items():
         new_cols_hashes.append(k)
-        typ = _type_to_id(type(fn(lambda x: get_element(df, x, 0))))
-        result_data = [fn(lambda x, c=idx: get_element(df, x, c)) for idx in range(df.size)]
+        typ = _type_to_id(type(expr.fn(lambda x: get_element(df, x, 0))))
+        result_data = [expr.fn(lambda x, c=idx: get_element(df, x, c)) for idx in range(df.size)]
         data = []
-        if typ == INTEGER_COL_TYPE_ID:
+        if typ == INTEGER_COL_TYPE_ID or typ == BOOL_COL_TYPE_ID:
             data = result_data
         else:
             lookup_table = None
@@ -146,8 +162,6 @@ def assing(df: Sfdf, maps: Dict[ColunmReference, MappingFunction]) -> Sfdf:
             l_3=get_or_default(data, 3),
             l_rest=data[4:] if df.size > 4 else []
         ))
-
-
 
     return replace(
         df,
